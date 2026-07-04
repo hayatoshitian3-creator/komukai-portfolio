@@ -1,0 +1,98 @@
+const PUBLISHABLE = ["公開可能", "一部加工で公開可能"];
+
+async function loadJson(path) {
+  const res = await fetch(path);
+  return res.json();
+}
+
+function workCard(work) {
+  const meta = [
+    ["目的", work.purpose],
+    ["担当範囲", work.role.join(" / ")],
+    ["使用ツール", work.tools.join(" / ")],
+    ["工夫したポイント", work.highlight],
+  ];
+
+  const thumbInner =
+    work.embedType === "youtube" && work.embedId
+      ? `<div class="play-badge" aria-hidden="true">▶</div>`
+      : "";
+
+  const thumbClass =
+    work.category === "feed-image"
+      ? "work-thumb work-thumb--square"
+      : "work-thumb";
+
+  return `
+    <article class="work-card" data-embed-type="${work.embedType}" data-embed-id="${work.embedId}">
+      <div class="${thumbClass}">
+        <img src="${work.thumbnail}" alt="${work.title}" loading="lazy">
+        ${thumbInner}
+      </div>
+      <div class="work-body">
+        <p class="work-category">${work.categoryLabel}</p>
+        <h3 class="work-title">${work.title}</h3>
+        <dl class="work-meta">
+          ${meta.map(([label, value]) => `<dt>${label}</dt><dd>${value}</dd>`).join("")}
+        </dl>
+        <p class="work-result">評価・結果：${work.result}</p>
+      </div>
+    </article>
+  `;
+}
+
+function testimonialCard(t) {
+  return `
+    <blockquote class="testimonial-card">
+      <p>${t.quote}</p>
+      <cite>${t.attribution}</cite>
+    </blockquote>
+  `;
+}
+
+function attachLazyEmbed(grid) {
+  grid.querySelectorAll(".work-thumb").forEach((thumb) => {
+    const card = thumb.closest(".work-card");
+    const type = card.dataset.embedType;
+    const id = card.dataset.embedId;
+    if (type !== "youtube" || !id) return;
+
+    thumb.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+      iframe.allowFullscreen = true;
+      iframe.width = "100%";
+      iframe.height = "100%";
+      thumb.replaceChildren(iframe);
+    }, { once: true });
+  });
+}
+
+async function renderWorks() {
+  const worksGrid = document.getElementById("works-grid");
+  const testimonialsGrid = document.getElementById("testimonials-grid");
+  if (!worksGrid && !testimonialsGrid) return;
+
+  const [works, testimonials] = await Promise.all([
+    loadJson("data/works.json"),
+    loadJson("data/testimonials.json"),
+  ]);
+
+  if (worksGrid) {
+    const visibleWorks = works.filter((w) => PUBLISHABLE.includes(w.publishStatus));
+    worksGrid.innerHTML = visibleWorks.length
+      ? visibleWorks.map(workCard).join("")
+      : `<p class="works-empty">準備中です。近日公開予定の実績がございます。</p>`;
+    attachLazyEmbed(worksGrid);
+  }
+
+  if (testimonialsGrid) {
+    const visibleTestimonials = testimonials.filter((t) => PUBLISHABLE.includes(t.publishStatus));
+    testimonialsGrid.innerHTML = visibleTestimonials.length
+      ? visibleTestimonials.map(testimonialCard).join("")
+      : "";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderWorks);

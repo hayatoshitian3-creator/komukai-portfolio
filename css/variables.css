@@ -1,0 +1,28 @@
+/* LP画像（紺×水色×白）から正式抽出したデザイントークン */
+:root {
+  --color-navy-900: #0c1e3e;
+  --color-navy-800: #16284a;
+  --color-navy-700: #1f3a63;
+  --color-sky-500: #29b6f6;
+  --color-sky-300: #8fd9fb;
+  --color-sky-100: #e6f7fe;
+  --color-white: #ffffff;
+  --color-ink: #1a1a2e;
+  --color-muted: #5c6470;
+  --color-border: #e1e6ee;
+
+  --font-base: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4.5rem;
+
+  --radius-card: 12px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 8px 24px rgba(15, 31, 61, 0.08);
+  --max-width: 1080px;
+}
