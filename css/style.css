@@ -7,6 +7,8 @@ body {
   font-family: var(--font-base);
   color: var(--color-ink);
   background: var(--color-white);
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .container {
@@ -248,7 +250,7 @@ section {
 /* ===== Works (achievement cards) ===== */
 .works-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: var(--space-3);
 }
 
@@ -304,8 +306,8 @@ section {
 
 .work-meta {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem 1rem;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 0.8rem;
   font-size: 0.85rem;
   color: var(--color-muted);
 }
@@ -527,4 +529,34 @@ section {
   .nav-toggle {
     display: none;
   }
+}
+
+/* ===== Works tabs ===== */
+.works-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.works-tab {
+  padding: 0.55rem 1.4rem;
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s;
+}
+
+.works-tab.is-active {
+  color: var(--color-sky-500);
+  border-bottom-color: var(--color-sky-500);
+}
+
+.works-tab:hover:not(.is-active) {
+  color: var(--color-navy-700);
 }

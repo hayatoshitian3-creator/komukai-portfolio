@@ -13,6 +13,10 @@ function workCard(work) {
     ["工夫したポイント", work.highlight],
   ];
 
+  const thumbSrc = (work.embedType === "youtube" && work.embedId)
+    ? `https://img.youtube.com/vi/${work.embedId}/hqdefault.jpg`
+    : work.thumbnail;
+
   const thumbInner =
     work.embedType === "youtube" && work.embedId
       ? `<div class="play-badge" aria-hidden="true">▶</div>`
@@ -26,7 +30,7 @@ function workCard(work) {
   return `
     <article class="work-card" data-embed-type="${work.embedType}" data-embed-id="${work.embedId}">
       <div class="${thumbClass}">
-        <img src="${work.thumbnail}" alt="${work.title}" loading="lazy">
+        <img src="${thumbSrc}" alt="${work.title}" loading="lazy">
         ${thumbInner}
       </div>
       <div class="work-body">
@@ -40,9 +44,9 @@ function workCard(work) {
   `;
 }
 
-function categorySection(heading, works) {
+function categorySection(heading, works, categoryKey) {
   return `
-    <div class="works-category-section">
+    <div class="works-category-section" data-category="${categoryKey}">
       <h3 class="works-category-heading">${heading}</h3>
       <div class="works-row">
         ${works.map(workCard).join("")}
@@ -95,11 +99,36 @@ async function renderWorks() {
     const feedWorks = visibleWorks.filter((w) => w.category === "feed-image");
 
     let html = "";
-    if (videoWorks.length) html += categorySection("ショート動画編集", videoWorks);
-    if (feedWorks.length) html += categorySection("投稿画像（カルーセル）", feedWorks);
+    if (videoWorks.length) html += categorySection("ショート動画編集", videoWorks, "short-video");
+    if (feedWorks.length) html += categorySection("投稿画像（カルーセル）", feedWorks, "feed-image");
 
     worksGrid.innerHTML = html || `<p class="works-empty">準備中です。近日公開予定の実績がございます。</p>`;
     attachLazyEmbed(worksGrid);
+
+    // タブUI生成
+    const tabs = [];
+    if (videoWorks.length) tabs.push({ category: "short-video", label: "ショート動画編集" });
+    if (feedWorks.length) tabs.push({ category: "feed-image", label: "投稿画像（カルーセル）" });
+
+    if (tabs.length > 1) {
+      const tabsHtml = `
+        <div class="works-tabs" role="tablist">
+          ${tabs.map((t, i) => `<button class="works-tab${i === 0 ? " is-active" : ""}" data-category="${t.category}" role="tab">${t.label}</button>`).join("")}
+        </div>
+      `;
+      worksGrid.insertAdjacentHTML("beforebegin", tabsHtml);
+
+      const sections = worksGrid.querySelectorAll(".works-category-section");
+      sections.forEach((s, i) => { if (i !== 0) s.hidden = true; });
+
+      document.querySelectorAll(".works-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          const cat = tab.dataset.category;
+          document.querySelectorAll(".works-tab").forEach(t => t.classList.toggle("is-active", t === tab));
+          sections.forEach(s => { s.hidden = s.dataset.category !== cat; });
+        });
+      });
+    }
   }
 
   if (testimonialsGrid) {
