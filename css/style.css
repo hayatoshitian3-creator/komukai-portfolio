@@ -422,6 +422,57 @@ section {
   gap: var(--space-2);
 }
 
+/* ===== Works category sections ===== */
+.works-category-section + .works-category-section {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.works-category-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-navy-700);
+  margin-bottom: var(--space-3);
+}
+
+.works-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+/* ===== Work stats ===== */
+.work-stats {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.work-stat-card {
+  flex: 1;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.work-stat-card strong {
+  display: block;
+  font-size: 2rem;
+  color: var(--color-sky-500);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+
+.work-stat-card span {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 860px) {
   .hero .container {
@@ -465,6 +516,10 @@ section {
 
   .work-meta {
     grid-template-columns: 1fr;
+  }
+
+  .work-stats {
+    flex-direction: column;
   }
 }
 

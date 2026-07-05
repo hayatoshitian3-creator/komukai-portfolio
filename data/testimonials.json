@@ -1,9 +1,37 @@
 [
   {
     "id": "testimonial-01",
-    "relatedWorkId": "restaurant-consulting-shorts-01",
-    "quote": "クオリティの高さ・意図の汲み取り・迅速な連絡対応について評価をいただきました",
-    "attribution": "クライアント様より",
-    "publishStatus": "非公開"
+    "relatedWorkId": null,
+    "quote": "丁寧かつスピーディーにご対応いただき、安心して進行できました。こちらの意図を汲み取りながら柔軟に対応いただき、コミュニケーションも非常にスムーズでした。特に、運用方針や改善提案についても主体的に動いていただけた点がありがたかったです。また機会があればぜひお願いしたいです。",
+    "attribution": "SNS運用のご依頼主様より",
+    "publishStatus": "公開可能"
+  },
+  {
+    "id": "testimonial-02",
+    "relatedWorkId": null,
+    "quote": "このたびはテスト動画の制作ありがとうございました。限られた素材の中でも、こちらの意図を汲み取り、スタッフの雰囲気や人間関係が伝わるよう工夫して編集していただきました。制作意図についても分かりやすくご説明いただき、とても参考になりました。終始丁寧かつ迅速にご対応いただき、安心してお取引を進めることができました。今回は僅差で別の方へお願いすることとなりましたが、今後機会がございましたらぜひお願いしたいと思えるクリエイター様です。このたびは誠にありがとうございました。",
+    "attribution": "動画編集のご依頼主様より",
+    "publishStatus": "公開可能"
+  },
+  {
+    "id": "testimonial-03",
+    "relatedWorkId": "business-knowhow-shorts-01",
+    "quote": "こちらの意思を汲み、編集いただきありがとうございました！",
+    "attribution": "動画編集のご依頼主様より",
+    "publishStatus": "公開可能"
+  },
+  {
+    "id": "testimonial-04",
+    "relatedWorkId": null,
+    "quote": "そこまで分析して話してくれる人は本当にいない",
+    "attribution": "Instagram運用のご依頼主様より",
+    "publishStatus": "公開可能"
+  },
+  {
+    "id": "testimonial-05",
+    "relatedWorkId": null,
+    "quote": "ポートフォリオまで添付していただき、ありがとうございます！実力とお人柄を兼ね備えた方だと感じました。／あのマニュアルからここまで洞察できるのは素晴らしいです！ありがとうございます！",
+    "attribution": "X運用ご検討のクライアント様より",
+    "publishStatus": "公開可能"
   }
 ]

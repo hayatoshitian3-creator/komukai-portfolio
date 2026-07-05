@@ -35,9 +35,19 @@ function workCard(work) {
         <dl class="work-meta">
           ${meta.map(([label, value]) => `<dt>${label}</dt><dd>${value}</dd>`).join("")}
         </dl>
-        <p class="work-result">評価・結果：${work.result}</p>
       </div>
     </article>
+  `;
+}
+
+function categorySection(heading, works) {
+  return `
+    <div class="works-category-section">
+      <h3 class="works-category-heading">${heading}</h3>
+      <div class="works-row">
+        ${works.map(workCard).join("")}
+      </div>
+    </div>
   `;
 }
 
@@ -81,9 +91,14 @@ async function renderWorks() {
 
   if (worksGrid) {
     const visibleWorks = works.filter((w) => PUBLISHABLE.includes(w.publishStatus));
-    worksGrid.innerHTML = visibleWorks.length
-      ? visibleWorks.map(workCard).join("")
-      : `<p class="works-empty">準備中です。近日公開予定の実績がございます。</p>`;
+    const videoWorks = visibleWorks.filter((w) => w.category === "short-video");
+    const feedWorks = visibleWorks.filter((w) => w.category === "feed-image");
+
+    let html = "";
+    if (videoWorks.length) html += categorySection("ショート動画編集", videoWorks);
+    if (feedWorks.length) html += categorySection("投稿画像（カルーセル）", feedWorks);
+
+    worksGrid.innerHTML = html || `<p class="works-empty">準備中です。近日公開予定の実績がございます。</p>`;
     attachLazyEmbed(worksGrid);
   }
 
