@@ -319,6 +319,8 @@ section {
 
 .work-meta dd {
   margin: 0;
+  min-width: 0;
+  word-break: break-all;
 }
 
 .work-result {
